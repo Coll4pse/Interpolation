@@ -75,12 +75,13 @@ namespace Interpolation
                 var y = textBoxesY
                     .Select(box => double.Parse(box.Text.Replace(',', ','), CultureInfo.InvariantCulture))
                     .ToArray();
-                string result;
+                
+                Polynomial result;
                 if (lagrange.IsChecked ?? true)
                     result = LagrangeMethod.Evaluate(x, y);
                 else
                     result = NewtonMethod.Evaluate(x, y);
-                answer.Text = result;
+                answer.Text = result.ToString();
             }
             catch (FormatException)
             {

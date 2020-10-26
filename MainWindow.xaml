@@ -57,6 +57,14 @@
             <RadioButton DockPanel.Dock="Top">Метод Ньютона</RadioButton>
         </DockPanel>
         
-        <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" x:Name="answer" Margin="5 ">TEST_TEXT</TextBlock>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="5 0">Интерполяционный полином:</TextBlock>
+            <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" x:Name="answer" Margin="5 "></TextBlock>
+        </Grid>
     </Grid>
 </Window>

@@ -7,10 +7,21 @@ namespace Interpolation
 {
     public class Polynomial
     {
+        private static readonly Dictionary<int, string> powers = new Dictionary<int, string>
+        {
+            {1, ""},
+            {2, "\u00B2"},
+            {3, "\u00B3"},
+            {4, "\u2074"},
+            {5, "\u2075"},
+            {6, "\u2076"},
+            {7, "\u2077"},
+            {8, "\u2078"},
+            {9, "\u2079"}
+        };
+        
         public Dictionary<int, double> Coefficients { get; }
-
-        public int Power => Coefficients.Max(pair => pair.Key);
-
+        
         public Polynomial(params double[] coefficients)
         {
             Coefficients = new Dictionary<int, double>();
@@ -90,21 +101,17 @@ namespace Interpolation
             RemoveZeroes(this);
             var stringBuilder = new StringBuilder();
             var isFirst = true;
-            foreach (var (power, value) in Coefficients)
+            foreach (var (power, value) in Coefficients.Reverse())
             {
-                var predicate = value > 0 && isFirst ? "" : "+";
+                var predicate = value < 0 || isFirst ? "" : "+";
                 if (isFirst) isFirst = false;
-                switch (power)
+                if (power == 0)
                 {
-                    case 0:
-                        stringBuilder.Append(predicate + value.ToString("F2"));
-                        break;
-                    case 1:
-                        stringBuilder.Append(predicate + value.ToString("F2") + "x");
-                        break;
-                    default:
-                        stringBuilder.Append(predicate + value.ToString("F2") + "x^" + power);
-                        break;
+                    stringBuilder.Append(predicate + value.ToString("F2"));
+                }
+                else
+                {
+                    stringBuilder.Append(predicate + value.ToString("F2") + "x" + (powers.ContainsKey(power) ? powers[power] : $"^{power}"));
                 }
             }
 
@@ -130,7 +137,7 @@ namespace Interpolation
 
         private static void RemoveZeroes(Polynomial polynomial)
         {
-            foreach (var pair in polynomial.Coefficients.Where(pair => pair.Value == 0))
+            foreach (var pair in polynomial.Coefficients.Where(pair => Math.Round(pair.Value, 2) == 0))
             {
                 polynomial.Coefficients.Remove(pair.Key);
             }

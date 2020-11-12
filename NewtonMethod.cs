@@ -32,17 +32,17 @@ namespace Interpolation
             {
                 if (i == 0)
                 {
-                    polynomial += x[i] * dividedDifferences[i][0];
+                    polynomial += dividedDifferences[i][0];
                 }
                 else
                 {
-                    var addablePplynomial = new Polynomial(dividedDifferences[i][0]);
+                    var addablePolynomial = new Polynomial(dividedDifferences[i][0]);
                     for (int j = 0; j < i; j++)
                     {
-                        addablePplynomial *= new Polynomial(-x[j], 1);
+                        addablePolynomial *= new Polynomial(-x[j], 1);
                     }
 
-                    polynomial += addablePplynomial;
+                    polynomial += addablePolynomial;
                 }
             }
 

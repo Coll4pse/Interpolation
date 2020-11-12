@@ -30,20 +30,13 @@ namespace Interpolation
             var polynomial = new Polynomial();
             for (int i = 0; i < dividedDifferences.Length; i++)
             {
-                if (i == 0)
+                var addablePolynomial = new Polynomial(dividedDifferences[i][0]);
+                for (int j = 0; j < i; j++)
                 {
-                    polynomial += dividedDifferences[i][0];
+                    addablePolynomial *= new Polynomial(-x[j], 1);
                 }
-                else
-                {
-                    var addablePolynomial = new Polynomial(dividedDifferences[i][0]);
-                    for (int j = 0; j < i; j++)
-                    {
-                        addablePolynomial *= new Polynomial(-x[j], 1);
-                    }
 
-                    polynomial += addablePolynomial;
-                }
+                polynomial += addablePolynomial;
             }
 
             return polynomial;
